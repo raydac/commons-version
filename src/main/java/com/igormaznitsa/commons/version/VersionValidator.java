@@ -1,0 +1,78 @@
+/*
+ * Copyright 2016 Igor Maznitsa.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.igormaznitsa.commons.version;
+
+import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Class allows to define rules to validate versions.
+ * It supports logical AND(,) and OR(;) operators. OR has less priority(!)
+ * 
+ * @since 1.0.0
+ */
+public final class VersionValidator implements Serializable {
+  private static final long serialVersionUID = 641987018021820537L;
+
+  private static final Pattern PATTERN_LEAF = Pattern.compile("(>=|<=|>|<|=)\\s*(.*)");
+  private static final Pattern PATTERN_OR = Pattern.compile("(.+)\\;(.+)");
+  private static final Pattern PATTERN_AND = Pattern.compile("(.+)\\,(.+)");
+
+  private final Operator expressionRoot;
+  
+  /**
+   * Make validator from describing string.
+   * @param str text with rule for validator, it can be null but in the case the result will be false every time
+   * @since 1.0.0
+   */
+  public VersionValidator(final String str) {
+    if (str == null) {
+      this.expressionRoot = null;
+    }else{
+      this.expressionRoot = parseExpressionTree(str);
+    }
+  }
+  
+  private static Operator parseExpressionTree(final String text){
+    final Matcher orMatcher = PATTERN_OR.matcher(text);
+    if (orMatcher.matches()){
+      return new OperatorOr(parseExpressionTree(orMatcher.group(1)), parseExpressionTree(orMatcher.group(2)));
+    }
+    final Matcher andMatcher = PATTERN_AND.matcher(text);
+    if (andMatcher.matches()) {
+      return new OperatorAnd(parseExpressionTree(andMatcher.group(1)), parseExpressionTree(andMatcher.group(2)));
+    }
+    final Matcher leaf = PATTERN_LEAF.matcher(text.trim());
+    if (leaf.matches()){
+      return new OperatorLeaf(Op.decode(leaf.group(1)), new Version(leaf.group(2)));
+    } else {
+      return new OperatorLeaf(Op.EQU, new Version(text));
+    }
+  }
+  
+  /**
+   * Validate version for the rule.
+   * @param version the version to be checked, it can be null
+   * @return true if the version is valid or false if the version is null or not valid from point of view the rule.
+   * 
+   * @since 1.0.0
+   */
+  public boolean isValid(final Version version){
+    return this.expressionRoot == null || version == null ? false : this.expressionRoot.isValid(version);
+  }
+  
+}
