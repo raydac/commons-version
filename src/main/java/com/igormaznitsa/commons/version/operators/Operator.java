@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.igormaznitsa.commons.version;
+package com.igormaznitsa.commons.version.operators;
 
-import com.igormaznitsa.commons.version.Op;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import com.igormaznitsa.commons.version.Version;
+import java.io.Serializable;
 
-public class OpTest {
-  
-  @Test
-  public void testSomeMethod() {
-    assertEquals(Op.EQU, Op.decode("="));
-    assertEquals(Op.LESS, Op.decode("<"));
-    assertEquals(Op.GREAT, Op.decode(">"));
-    assertEquals(Op.GREAT_OR_EQU, Op.decode(">="));
-    assertEquals(Op.LESS_OR_EQU, Op.decode("<="));
-    assertEquals(Op.EQU, Op.decode(""));
-    assertEquals(Op.EQU, Op.decode(null));
-    assertEquals(Op.EQU, Op.decode(">>>>"));
-  }
-  
+/**
+ * Common internal interface for operators.
+ * @since 1.0.0
+ */
+public interface Operator extends Serializable {
+  /**
+   * Check version by the operator.
+   * @param version version to be checked, it can be null.
+   * @return true if the version is valid, false otherwise (or if the version is null)
+   * @since 1.0.0
+   */
+  boolean isValid(Version version);
 }

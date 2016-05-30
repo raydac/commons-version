@@ -15,6 +15,11 @@
  */
 package com.igormaznitsa.commons.version;
 
+import com.igormaznitsa.commons.version.operators.OperatorLeaf;
+import com.igormaznitsa.commons.version.operators.OperatorOr;
+import com.igormaznitsa.commons.version.operators.Operator;
+import com.igormaznitsa.commons.version.operators.Condition;
+import com.igormaznitsa.commons.version.operators.OperatorAnd;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,9 +63,9 @@ public final class VersionValidator implements Serializable {
     }
     final Matcher leaf = PATTERN_LEAF.matcher(text.trim());
     if (leaf.matches()){
-      return new OperatorLeaf(Op.decode(leaf.group(1)), new Version(leaf.group(2)));
+      return new OperatorLeaf(Condition.decode(leaf.group(1)), new Version(leaf.group(2)));
     } else {
-      return new OperatorLeaf(Op.EQU, new Version(text));
+      return new OperatorLeaf(Condition.EQU, new Version(text));
     }
   }
   

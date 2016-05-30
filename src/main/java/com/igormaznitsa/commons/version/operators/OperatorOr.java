@@ -13,31 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.igormaznitsa.commons.version;
+package com.igormaznitsa.commons.version.operators;
+
+import com.igormaznitsa.commons.version.Version;
 
 /**
- * Implementation of AND operator.
+ * Implementation of OR operator.
+ * 
  * @since 1.0.0
  */
-final class OperatorAnd implements Operator {
+public final class OperatorOr implements Operator {
 
-  private static final long serialVersionUID = -1503624332275479528L;
+  private static final long serialVersionUID = 6157830741700335631L;
 
   private final Operator a;
   private final Operator b;
   
-  OperatorAnd(final Operator a, final Operator b) {
+  public OperatorOr(final Operator a, final Operator b) {
     this.a = a;
     this.b = b;
   }
   
   @Override
   public boolean isValid(final Version version) {
-    return this.a.isValid(version) && this.b.isValid(version);
+    return this.a.isValid(version) || this.b.isValid(version);
   }
   
   @Override
   public String toString(){
-    return a.toString()+','+b.toString();
+    return this.a.toString() + ';' +this.b.toString();
   }
+  
 }

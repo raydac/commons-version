@@ -13,69 +13,85 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.igormaznitsa.commons.version;
+package com.igormaznitsa.commons.version.operators;
 
 /**
  * Set of conditional operators allowed over versions.
- * 
+ *
  * @since 1.0.0
  */
-public enum Op {
+public enum Condition {
+  /**
+   * Unknown.
+   *
+   * @since 1.0.0
+   */
+  UNKNOWN(""),
   /**
    * Equals.
+   *
    * @since 1.0.0
    */
-  EQU("="), 
+  EQU("="),
   /**
    * Not equals.
+   *
    * @since 1.0.0
    */
-  NOT_EQU("!="), 
+  NOT_EQU("!="),
   /**
    * Less.
+   *
    * @since 1.0.0
    */
-  LESS("<"), 
+  LESS("<"),
   /**
    * Great.
+   *
    * @since 1.0.0
    */
-  GREAT(">"), 
+  GREAT(">"),
   /**
    * Less or equals.
+   *
    * @since 1.0.0
    */
   LESS_OR_EQU("<="),
   /**
    * Great or equals.
+   *
    * @since 1.0.0
    */
   GREAT_OR_EQU(">=");
-  
+
   private final String str;
 
-  private Op(final String str) {
+  private Condition(final String str) {
     this.str = str;
   }
 
   /**
    * Find conditional operator for its string representation.
+   *
    * @param text text to be decoded, it can be null.
-   * @return detected operator or Op#EQU if it was not recognized.
+   * @return detected operator or Condition#EQU if it was not recognized.
    * @since 1.0.0
    */
-  public static Op decode(final String text) {
-    for (final Op op : Op.values()) {
+  public static Condition decode(final String text) {
+    if (text != null && text.isEmpty()) {
+      return EQU;
+    }
+    for (final Condition op : Condition.values()) {
       if (op.str.equals(text)) {
         return op;
       }
     }
-    return EQU;
+    return UNKNOWN;
   }
-  
+
   @Override
-  public String toString(){
+  public String toString() {
     return this.str;
   }
-  
+
 }

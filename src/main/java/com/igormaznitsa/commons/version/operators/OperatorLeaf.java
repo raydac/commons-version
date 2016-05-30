@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.igormaznitsa.commons.version;
+package com.igormaznitsa.commons.version.operators;
+
+import com.igormaznitsa.commons.version.Version;
 
 /**
  * It is a pseudo-operator, it does nothing and represents a leaf in the operator tree.
  * 
  * @since 1.0.0
  */
-class OperatorLeaf implements Operator {
+public class OperatorLeaf implements Operator {
 
   private static final long serialVersionUID = -4529836368426048811L;
 
-  private final Op op;
+  private final Condition op;
   private final Version base;
   
-  OperatorLeaf(final Op op, final Version base) {
+  public OperatorLeaf(final Condition op, final Version base) {
     this.op = op;
     this.base = base;
   }
@@ -36,6 +38,9 @@ class OperatorLeaf implements Operator {
   public boolean isValid(final Version version) {
     final int result = this.base.compareTo(version);
     switch (this.op) {
+      case UNKNOWN : {
+        throw new IllegalArgumentException("Detected illegal condition");
+      }
       case EQU:
         return result == 0;
       case NOT_EQU:
