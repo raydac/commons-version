@@ -36,3 +36,4 @@ if (validator.isValid(someVersion)){
   System.out.println("Version valid");
 }
 ```
+__NB! Wrong written conditional operator will be recognized as part of the version prefix! Be careful for typo like `=>`!__
