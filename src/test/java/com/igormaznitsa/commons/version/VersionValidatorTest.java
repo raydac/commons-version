@@ -8,6 +8,12 @@ import java.util.List;
 public class VersionValidatorTest {
   
   @Test
+  public void getExpressionTreeRoot() {
+    assertNotNull(new VersionValidator("=1.2.3").getExpressionTreeRoot());
+    assertNull(new VersionValidator(null).getExpressionTreeRoot());
+  }
+  
+  @Test
   public void testCreateFromNull() {
     assertFalse(new VersionValidator(null).isValid(null));
     assertFalse(new VersionValidator(null).isValid(new Version("1.2.3.4")));

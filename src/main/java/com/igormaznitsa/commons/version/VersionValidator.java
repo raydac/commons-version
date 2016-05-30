@@ -52,6 +52,15 @@ public final class VersionValidator implements Serializable {
     }
   }
   
+  /**
+   * Get the parsed expression tree root.
+   * @return the expression tree root, it can be null
+   * @since 1.0.0
+   */
+  public Operator getExpressionTreeRoot(){
+    return this.expressionRoot;
+  }
+  
   private static Operator parseExpressionTree(final String text){
     final Matcher orMatcher = PATTERN_OR.matcher(text);
     if (orMatcher.matches()){
