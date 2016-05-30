@@ -10,18 +10,18 @@ public class VersionValidatorTest {
   @Test
   public void getExpressionTreeRoot() {
     assertNotNull(new VersionValidator("=1.2.3").getExpressionTreeRoot());
-    assertNull(new VersionValidator(null).getExpressionTreeRoot());
+    assertNull(new VersionValidator((String)null).getExpressionTreeRoot());
   }
   
   @Test
   public void testCreateFromNull() {
-    assertFalse(new VersionValidator(null).isValid(null));
-    assertFalse(new VersionValidator(null).isValid(new Version("1.2.3.4")));
+    assertFalse(new VersionValidator((String)null).isValid(null));
+    assertFalse(new VersionValidator((String)null).isValid(new Version("1.2.3.4")));
   }
 
   @Test
   public void testToString(){
-    assertEquals("VersionValidator[]",new VersionValidator(null).toString());
+    assertEquals("VersionValidator[]",new VersionValidator((String)null).toString());
     assertEquals("VersionValidator[=1.2.3,<4.5.6;>=7.8.1,<=1-SNAPSHOT;!=4.4.5]",new VersionValidator("1.2.3,<4.5.6;>=7.8.1,<=1-SNAPSHOT;!=4.4.5").toString());
   }
   

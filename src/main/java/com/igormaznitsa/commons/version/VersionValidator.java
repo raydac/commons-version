@@ -40,16 +40,21 @@ public final class VersionValidator implements Serializable {
   private final Operator expressionRoot;
   
   /**
-   * Make validator from describing string.
+   * Make validator based on parsed expression.
+   * @param expressionRoot operator to be used as the root of expression tree, it can be null
+   * @since 1.0.0
+   */
+  public VersionValidator(final Operator expressionRoot) {
+    this.expressionRoot = expressionRoot;
+  }
+  
+  /**
+   * Make validator from string.
    * @param str text with rule for validator, it can be null but in the case the result will be false every time
    * @since 1.0.0
    */
   public VersionValidator(final String str) {
-    if (str == null) {
-      this.expressionRoot = null;
-    }else{
-      this.expressionRoot = parseExpressionTree(str);
-    }
+    this(str == null ? null : parseExpressionTree(str));
   }
   
   /**
