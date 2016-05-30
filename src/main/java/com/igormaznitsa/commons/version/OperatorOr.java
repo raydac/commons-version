@@ -35,4 +35,9 @@ final class OperatorOr implements Operator {
     return this.a.isValid(version) || this.b.isValid(version);
   }
   
+  @Override
+  public String toString(){
+    return this.a.toString() + ';' +this.b.toString();
+  }
+  
 }

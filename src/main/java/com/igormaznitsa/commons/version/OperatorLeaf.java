@@ -36,6 +36,8 @@ class OperatorLeaf implements Operator {
     switch (this.op) {
       case EQU:
         return result == 0;
+      case NOT_EQU:
+        return result != 0;
       case LESS:
         return result > 0;
       case GREAT:
@@ -47,5 +49,10 @@ class OperatorLeaf implements Operator {
       default:
         throw new Error("Detected unexpected operation : "+this.op);
     }
+  }
+  
+  @Override
+  public String toString(){
+    return this.op.toString()+this.base.toString();
   }
 }

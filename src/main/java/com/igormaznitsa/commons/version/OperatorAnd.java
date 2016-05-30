@@ -34,4 +34,8 @@ final class OperatorAnd implements Operator {
     return this.a.isValid(version) && this.b.isValid(version);
   }
   
+  @Override
+  public String toString(){
+    return a.toString()+','+b.toString();
+  }
 }

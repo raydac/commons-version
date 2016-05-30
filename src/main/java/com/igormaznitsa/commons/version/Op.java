@@ -27,6 +27,11 @@ public enum Op {
    */
   EQU("="), 
   /**
+   * Not equals.
+   * @since 1.0.0
+   */
+  NOT_EQU("!="), 
+  /**
    * Less.
    * @since 1.0.0
    */
@@ -66,6 +71,11 @@ public enum Op {
       }
     }
     return EQU;
+  }
+  
+  @Override
+  public String toString(){
+    return this.str;
   }
   
 }

@@ -1,7 +1,5 @@
 package com.igormaznitsa.commons.version;
 
-import com.igormaznitsa.commons.version.VersionValidator;
-import com.igormaznitsa.commons.version.Version;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
@@ -14,11 +12,23 @@ public class VersionValidatorTest {
     assertFalse(new VersionValidator(null).isValid(null));
     assertFalse(new VersionValidator(null).isValid(new Version("1.2.3.4")));
   }
+
+  @Test
+  public void testToString(){
+    assertEquals("VersionValidator[]",new VersionValidator(null).toString());
+    assertEquals("VersionValidator[=1.2.3,<4.5.6;>=7.8.1,<=1-SNAPSHOT;!=4.4.5]",new VersionValidator("1.2.3,<4.5.6;>=7.8.1,<=1-SNAPSHOT;!=4.4.5").toString());
+  }
   
   @Test
   public void testEqu() {
     assertTrue(new VersionValidator("=idea-1.2.3-a").isValid(new Version("idea-01.002.0003-a")));
     assertFalse(new VersionValidator("=idea-1.2.3-a").isValid(new Version("idea-01.002.0003-b")));
+  }
+
+  @Test
+  public void testNotEqu() {
+    assertFalse(new VersionValidator("!=idea-1.2.3-a").isValid(new Version("idea-01.002.0003-a")));
+    assertTrue(new VersionValidator("!=idea-1.2.3-a").isValid(new Version("idea-01.002.0003-b")));
   }
 
   @Test

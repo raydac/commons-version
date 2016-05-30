@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 public final class VersionValidator implements Serializable {
   private static final long serialVersionUID = 641987018021820537L;
 
-  private static final Pattern PATTERN_LEAF = Pattern.compile("(>=|<=|>|<|=)\\s*(.*)");
+  private static final Pattern PATTERN_LEAF = Pattern.compile("(!=|>=|<=|>|<|=)\\s*(.*)");
   private static final Pattern PATTERN_OR = Pattern.compile("(.+)\\;(.+)");
   private static final Pattern PATTERN_AND = Pattern.compile("(.+)\\,(.+)");
 
@@ -73,6 +73,11 @@ public final class VersionValidator implements Serializable {
    */
   public boolean isValid(final Version version){
     return this.expressionRoot == null || version == null ? false : this.expressionRoot.isValid(version);
+  }
+  
+  @Override
+  public String toString(){
+    return VersionValidator.class.getSimpleName()+(this.expressionRoot == null ? "[]" : '['+this.expressionRoot.toString()+']');
   }
   
 }
