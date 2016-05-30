@@ -10,8 +10,8 @@ it is an auxiliary framework to parse and validate some version information.
 
 # How it works?
 It has two main classes
-- com.igormaznitsa.commons.version.Version to parse string representation of version, usual format is XXX-NNN.NNN.NN-ZZZZ
-- com.igormaznitsa.commons.version.VersionValidator to validate version for some logical condition
+- __[com.igormaznitsa.commons.version.Version](https://github.com/raydac/commons-version/blob/master/src/main/java/com/igormaznitsa/commons/version/Version.java)__ to parse string representation of version, usual format is XXX-NNN.NNN.NN-ZZZZ
+- __[com.igormaznitsa.commons.version.VersionValidator](https://github.com/raydac/commons-version/blob/master/src/main/java/com/igormaznitsa/commons/version/VersionValidator.java)__ to validate version for some logical condition
 
 # Usage of version
 ```
