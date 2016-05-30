@@ -4,19 +4,45 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
+import static org.mockito.Mockito.*;
+import com.igormaznitsa.commons.version.operators.Condition;
+import com.igormaznitsa.commons.version.operators.ExpressionParser;
+import com.igormaznitsa.commons.version.operators.Operator;
+import com.igormaznitsa.commons.version.operators.OperatorAnd;
+import com.igormaznitsa.commons.version.operators.OperatorLeaf;
 
 public class VersionValidatorTest {
   
   @Test
-  public void getExpressionTreeRoot() {
-    assertNotNull(new VersionValidator("=1.2.3").getExpressionTreeRoot());
-    assertNull(new VersionValidator((String)null).getExpressionTreeRoot());
+  public void testConstructor_Str(){
+    assertNull(new VersionValidator((String)null).getExpressionRoot());
+    assertNotNull(new VersionValidator(">=1.1.1").getExpressionRoot());
+  }
+
+  @Test
+  public void testConstructor_StrParser(){
+    final ExpressionParser parser = mock(ExpressionParser.class);
+    new VersionValidator("hello parser", parser);
+    verify(parser, times(1)).parse("hello parser");
+  }
+  
+  @Test
+  public void testConstructor_Operator(){
+    assertNull(new VersionValidator((Operator)null).getExpressionRoot());
+    final Operator operator = new OperatorAnd(new OperatorLeaf(Condition.EQU, new Version("1.1.1")), new OperatorLeaf(Condition.EQU, new Version("1.2.2")));
+    assertSame(operator,new VersionValidator(operator).getExpressionRoot());
+  }
+  
+  @Test
+  public void testGetExpressionRoot() {
+    assertNotNull(new VersionValidator("=1.2.3").getExpressionRoot());
+    assertNull(new VersionValidator((String)null).getExpressionRoot());
   }
   
   @Test
   public void testCreateFromNull() {
     assertFalse(new VersionValidator((String)null).isValid(null));
-    assertFalse(new VersionValidator((String)null).isValid(new Version("1.2.3.4")));
+    assertFalse(new VersionValidator((String)null).isValid(new Version("1.2.3.4-aaa")));
   }
 
   @Test

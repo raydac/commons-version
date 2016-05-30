@@ -19,22 +19,22 @@ import com.igormaznitsa.commons.version.Version;
 
 /**
  * It is a pseudo-operator, it does nothing and represents a leaf in the operator tree.
- * 
+ *
  * @since 1.0.0
  */
-public class OperatorLeaf implements Operator {
+public final class OperatorLeaf implements Operator {
 
   private static final long serialVersionUID = -4529836368426048811L;
 
   private final Condition op;
   private final Version base;
-  
+
   /**
    * Constructor.
    *
    * @param op condition, must not be null
    * @param base the base version value to be used with the condition, must not be null
-   * 
+   *
    * @since 1.0.0
    */
   public OperatorLeaf(final Condition op, final Version base) {
@@ -44,30 +44,33 @@ public class OperatorLeaf implements Operator {
 
   @Override
   public boolean isValid(final Version version) {
-    final int result = this.base.compareTo(version);
-    switch (this.op) {
-      case UNKNOWN : {
-        throw new IllegalArgumentException("Detected illegal condition");
+    if (version != null) {
+      final int result = this.base.compareTo(version);
+      switch (this.op) {
+        case UNKNOWN: {
+          throw new IllegalArgumentException("Detected illegal condition");
+        }
+        case EQU:
+          return result == 0;
+        case NOT_EQU:
+          return result != 0;
+        case LESS:
+          return result > 0;
+        case GREAT:
+          return result < 0;
+        case LESS_OR_EQU:
+          return result >= 0;
+        case GREAT_OR_EQU:
+          return result <= 0;
+        default:
+          throw new Error("Detected unexpected operation : " + this.op);
       }
-      case EQU:
-        return result == 0;
-      case NOT_EQU:
-        return result != 0;
-      case LESS:
-        return result > 0;
-      case GREAT:
-        return result < 0;
-      case LESS_OR_EQU:
-        return result >= 0;
-      case GREAT_OR_EQU:
-        return result <= 0;
-      default:
-        throw new Error("Detected unexpected operation : "+this.op);
     }
+    return false;
   }
-  
+
   @Override
-  public String toString(){
-    return this.op.toString()+this.base.toString();
+  public String toString() {
+    return this.op.toString() + this.base.toString();
   }
 }

@@ -42,7 +42,7 @@ public final class OperatorAnd implements Operator {
   
   @Override
   public boolean isValid(final Version version) {
-    return this.a.isValid(version) && this.b.isValid(version);
+    return version != null && this.a.isValid(version) && this.b.isValid(version);
   }
   
   @Override

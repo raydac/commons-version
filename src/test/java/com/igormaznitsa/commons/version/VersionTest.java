@@ -25,6 +25,22 @@ public class VersionTest {
   }
 
   @Test
+  public void testEqualsAndHash(){
+    final Version a = new Version("idea-1.2.3-dev");
+    final Version b = new Version("idea-1.2.3-dev");
+    assertEquals(a.hashCode(),b.hashCode());
+    assertTrue(a.equals(b));
+    assertTrue(a.equals(a));
+    assertFalse(a.equals(b.changePrefix("idal")));
+    assertFalse(a.equals(new Version((String)null)));
+  }
+  
+  @Test
+  public void testChange() {
+    assertEquals("netbeans-6.2.1-dev",new Version("idea-1.2.3-prod").changeNumeric(6,2,1).changePrefix("netbeans").changePostfix("dev").toString());
+  }
+  
+  @Test
   public void testCompare_Nums() {
     final Version[] versions = {new Version(1, 2, 3), new Version(2), new Version(8), new Version(1, 1, 1), new Version(1, 2)};
     Arrays.sort(versions);

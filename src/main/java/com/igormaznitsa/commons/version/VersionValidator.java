@@ -15,88 +15,84 @@
  */
 package com.igormaznitsa.commons.version;
 
-import com.igormaznitsa.commons.version.operators.OperatorLeaf;
-import com.igormaznitsa.commons.version.operators.OperatorOr;
 import com.igormaznitsa.commons.version.operators.Operator;
-import com.igormaznitsa.commons.version.operators.Condition;
-import com.igormaznitsa.commons.version.operators.OperatorAnd;
 import java.io.Serializable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.igormaznitsa.commons.version.operators.DefaultExpressionParser;
+import com.igormaznitsa.commons.version.operators.ExpressionParser;
 
 /**
- * Class allows to define rules to validate versions.
- * It supports logical AND(,) and OR(;) operators. OR has less priority(!)
- * 
+ * Class allows to define rules to validate versions. It supports logical AND(,) and OR(;) operators. OR has less priority(!)
+ *
  * @since 1.0.0
  */
 public final class VersionValidator implements Serializable {
+
   private static final long serialVersionUID = 641987018021820537L;
 
-  private static final Pattern PATTERN_LEAF = Pattern.compile("(!=|>=|<=|>|<|=)\\s*(.*)");
-  private static final Pattern PATTERN_OR = Pattern.compile("(.+)\\;(.+)");
-  private static final Pattern PATTERN_AND = Pattern.compile("(.+)\\,(.+)");
-
   private final Operator expressionRoot;
-  
+  private static final ExpressionParser DEFAULT_EXPRESSION_PARSER = new DefaultExpressionParser();
+
   /**
    * Make validator based on parsed expression.
+   *
    * @param expressionRoot operator to be used as the root of expression tree, it can be null
    * @since 1.0.0
    */
   public VersionValidator(final Operator expressionRoot) {
     this.expressionRoot = expressionRoot;
   }
-  
+
   /**
    * Make validator from string.
-   * @param str text with rule for validator, it can be null but in the case the result will be false every time
+   *
+   * @param expression expression for validator, it can be null but in the case the result will be false every time
    * @since 1.0.0
    */
-  public VersionValidator(final String str) {
-    this(str == null ? null : parseExpressionTree(str));
+  public VersionValidator(final String expression) {
+    this(expression, DEFAULT_EXPRESSION_PARSER);
   }
-  
+
+  /**
+   * Make validator with custom expression parser.
+   *
+   * @param expression text of expression to be parsed, it can be null
+   * @param parser parser to parse expression, it must not be null
+   * @since 1.0.0
+   * @see DefaultExpressionParser
+   */
+  public VersionValidator(final String expression, final ExpressionParser parser) {
+    this(expression == null ? null : parser.parse(expression));
+  }
+
   /**
    * Get the parsed expression tree root.
+   *
    * @return the expression tree root, it can be null
    * @since 1.0.0
    */
-  public Operator getExpressionTreeRoot(){
+  public Operator getExpressionRoot() {
     return this.expressionRoot;
   }
-  
-  private static Operator parseExpressionTree(final String text){
-    final Matcher orMatcher = PATTERN_OR.matcher(text);
-    if (orMatcher.matches()){
-      return new OperatorOr(parseExpressionTree(orMatcher.group(1)), parseExpressionTree(orMatcher.group(2)));
-    }
-    final Matcher andMatcher = PATTERN_AND.matcher(text);
-    if (andMatcher.matches()) {
-      return new OperatorAnd(parseExpressionTree(andMatcher.group(1)), parseExpressionTree(andMatcher.group(2)));
-    }
-    final Matcher leaf = PATTERN_LEAF.matcher(text.trim());
-    if (leaf.matches()){
-      return new OperatorLeaf(Condition.decode(leaf.group(1)), new Version(leaf.group(2)));
-    } else {
-      return new OperatorLeaf(Condition.EQU, new Version(text));
-    }
-  }
-  
+
   /**
    * Validate version for the rule.
+   *
    * @param version the version to be checked, it can be null
    * @return true if the version is valid or false if the version is null or not valid from point of view the rule.
-   * 
+   *
    * @since 1.0.0
    */
-  public boolean isValid(final Version version){
-    return this.expressionRoot == null || version == null ? false : this.expressionRoot.isValid(version);
+  public boolean isValid(final Version version) {
+    boolean result = false;
+    if (this.expressionRoot != null) {
+      result = this.expressionRoot.isValid(version);
+    }
+    return result;
   }
-  
+
   @Override
-  public String toString(){
-    return VersionValidator.class.getSimpleName()+(this.expressionRoot == null ? "[]" : '['+this.expressionRoot.toString()+']');
+  public String toString() {
+    return VersionValidator.class.getSimpleName() + (this.expressionRoot == null ? "[]" : '[' + this.expressionRoot.toString() + ']');
   }
-  
+
 }

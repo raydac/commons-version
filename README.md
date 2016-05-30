@@ -36,4 +36,5 @@ if (validator.isValid(someVersion)){
   System.out.println("Version valid");
 }
 ```
+Also it is possible to implement own expression parser to parse expressions.   
 __NB! Wrong written conditional operator will be recognized as part of the version prefix! Be careful for typo like `=>`!__
