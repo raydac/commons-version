@@ -14,7 +14,7 @@ It has two main classes
 - __[com.igormaznitsa.commons.version.VersionValidator](https://github.com/raydac/commons-version/blob/master/src/main/java/com/igormaznitsa/commons/version/VersionValidator.java)__ to validate version for some logical condition
 
 # Usage of version
-```
+```java
 Version parsed = new Version("idea-1.04.0015-alpha");
 Version fullyFromScratch = new Version("idea",new long[]{1,4,15},"alpha");
 
@@ -30,7 +30,7 @@ Allowed conditions:
 - __>=__ great or equals
 - __<=__ less or equals
 - if there is no any operator then it will be recognized as __=__
-```
+```java
 VersionValidator validator = new VersionValidator(">idea-1.1.0,<idea-3.0.2;1.1.0,3.0.2;!=0.0.1-dev");
 if (validator.isValid(someVersion)){
   System.out.println("Version valid");
