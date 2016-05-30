@@ -22,6 +22,14 @@ Version onlyNumber = new Version(1,4,15);
 Version changed = onlyNumber.changePrefix("idea").changePostfix("alpha").changeNumeric(0,1,2);
 ```
 # Usage of version validator
+Validator supports AND (,) and OR (;) logical operators, where AND has higher priority.  
+Conditional operators:
+- __=__ equals
+- __<__ less
+- __>__ great
+- __>=__ great or equals
+- __<=__ less or equals
+- if there is no any operator then it will be recognized as __=__
 ```
 VersionValidator validator = new VersionValidator(">idea-1.1.0,<idea-3.0.2;1.1.0,3.0.2;!=0.0.1-dev");
 if (validator.isValid(someVersion)){
