@@ -13,7 +13,7 @@ It has two main classes
 - com.igormaznitsa.commons.version.Version to parse string representation of version, usual format is XXX-NNN.NNN.NN-ZZZZ
 - com.igormaznitsa.commons.version.VersionValidator to validate version for some logical condition
 
-# Version parsing
+# Usage of version
 ```
 Version parsed = new Version("idea-1.04.0015-alpha");
 Version fullyFromScratch = new Version("idea",new long[]{1,4,15},"alpha");
@@ -21,7 +21,7 @@ Version fullyFromScratch = new Version("idea",new long[]{1,4,15},"alpha");
 Version onlyNumber = new Version(1,4,15);
 Version changed = onlyNumber.changePrefix("idea").changePostfix("alpha").changeNumeric(0,1,2);
 ```
-# Preparing version validator
+# Usage of version validator
 ```
 VersionValidator validator = new VersionValidator(">idea-1.1.0,<idea-3.0.2;1.1.0,3.0.2;!=0.0.1-dev");
 if (validator.isValid(someVersion)){
