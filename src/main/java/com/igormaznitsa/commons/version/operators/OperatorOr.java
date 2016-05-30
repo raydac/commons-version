@@ -29,6 +29,14 @@ public final class OperatorOr implements Operator {
   private final Operator a;
   private final Operator b;
   
+  /**
+   * Constructor.
+   *
+   * @param a the left part, must not be null
+   * @param b the right part, must not be null
+   *
+   * @since 1.0.0
+   */
   public OperatorOr(final Operator a, final Operator b) {
     this.a = a;
     this.b = b;

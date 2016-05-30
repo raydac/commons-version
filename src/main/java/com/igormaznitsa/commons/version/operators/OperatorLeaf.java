@@ -29,6 +29,14 @@ public class OperatorLeaf implements Operator {
   private final Condition op;
   private final Version base;
   
+  /**
+   * Constructor.
+   *
+   * @param op condition, must not be null
+   * @param base the base version value to be used with the condition, must not be null
+   * 
+   * @since 1.0.0
+   */
   public OperatorLeaf(final Condition op, final Version base) {
     this.op = op;
     this.base = base;
