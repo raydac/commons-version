@@ -22,6 +22,8 @@ package com.igormaznitsa.commons.version;
  */
 final class OperatorOr implements Operator {
 
+  private static final long serialVersionUID = 6157830741700335631L;
+
   private final Operator a;
   private final Operator b;
   

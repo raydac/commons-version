@@ -22,6 +22,8 @@ package com.igormaznitsa.commons.version;
  */
 class OperatorLeaf implements Operator {
 
+  private static final long serialVersionUID = -4529836368426048811L;
+
   private final Op op;
   private final Version base;
   
