@@ -8,9 +8,22 @@
 
   <name>commons-version</name>
   <description>Set of classes to parse and process version information</description>
+  <url>https://github.com/raydac/commons-version</url>
+  
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/raydac/commons-version/issues</url>
+  </issueManagement>
 
+  <scm>
+    <url>https://github.com/raydac/commons-version</url>
+    <connection>scm:git:git://github.com/raydac/commons-version.git</connection>
+    <developerConnection>scm:git:git@github.com:raydac/commons-version.git</developerConnection>
+  </scm>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <timestamp>${maven.build.timestamp}</timestamp>
     <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
     <maven.compiler.source>1.6</maven.compiler.source>
