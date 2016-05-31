@@ -43,10 +43,11 @@ public final class VersionValidator implements Serializable {
   }
 
   /**
-   * Make validator from string.
+   * Make validator from string with default expression parser.
    *
    * @param expression expression for validator, it can be null but in the case the result will be false every time
    * @since 1.0.0
+   * @see DefaultExpressionParser
    */
   public VersionValidator(final String expression) {
     this(expression, DEFAULT_EXPRESSION_PARSER);
