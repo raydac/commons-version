@@ -15,19 +15,22 @@
  */
 package com.igormaznitsa.commons.version.operators;
 
-import java.io.Serializable;
 import com.igormaznitsa.commons.version.VersionValidator;
+
+import java.io.Serializable;
 
 /**
  * Interface to be implemented by an expression parser.
- * @since 1.0.0
+ *
  * @see VersionValidator
  * @see DefaultExpressionParser
+ * @since 1.0.0
  */
 public interface ExpressionParser extends Serializable {
-  
+
   /**
    * Parse some text and return root operator for the parsed tree.
+   *
    * @param expression text to be parsed as expression, it can be null
    * @return the parsed root tree operator, it can be null
    * @since 1.0.0

@@ -15,22 +15,23 @@
  */
 package com.igormaznitsa.commons.version;
 
-import com.igormaznitsa.commons.version.operators.Operator;
-import java.io.Serializable;
 import com.igormaznitsa.commons.version.operators.DefaultExpressionParser;
 import com.igormaznitsa.commons.version.operators.ExpressionParser;
+import com.igormaznitsa.commons.version.operators.Operator;
+
+import java.io.Serializable;
 
 /**
  * Class allows to define rules to validate versions. It supports logical AND(,) and OR(;) operators. OR has less priority(!)
  *
  * @since 1.0.0
  */
+@SuppressWarnings("GrazieInspection")
 public final class VersionValidator implements Serializable {
 
   private static final long serialVersionUID = 641987018021820537L;
-
-  private final Operator expressionRoot;
   private static final ExpressionParser DEFAULT_EXPRESSION_PARSER = new DefaultExpressionParser();
+  private final Operator expressionRoot;
 
   /**
    * Make validator based on parsed expression.
@@ -46,8 +47,8 @@ public final class VersionValidator implements Serializable {
    * Make validator from string with default expression parser.
    *
    * @param expression expression for validator, it can be null but in the case the result will be false every time
-   * @since 1.0.0
    * @see DefaultExpressionParser
+   * @since 1.0.0
    */
   public VersionValidator(final String expression) {
     this(expression, DEFAULT_EXPRESSION_PARSER);
@@ -57,9 +58,9 @@ public final class VersionValidator implements Serializable {
    * Make validator with custom expression parser.
    *
    * @param expression text of expression to be parsed, it can be null
-   * @param parser parser to parse expression, it must not be null
-   * @since 1.0.0
+   * @param parser     parser to parse expression, it must not be null
    * @see DefaultExpressionParser
+   * @since 1.0.0
    */
   public VersionValidator(final String expression, final ExpressionParser parser) {
     this(expression == null ? null : parser.parse(expression));
@@ -80,7 +81,6 @@ public final class VersionValidator implements Serializable {
    *
    * @param version the version to be checked, it can be null
    * @return true if the version is valid or false if the version is null or not valid from point of view the rule.
-   *
    * @since 1.0.0
    */
   public boolean isValid(final Version version) {

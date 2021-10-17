@@ -66,7 +66,7 @@ public enum Condition {
 
   private final String str;
 
-  private Condition(final String str) {
+  Condition(final String str) {
     this.str = str;
   }
 

@@ -15,9 +15,10 @@
  */
 package com.igormaznitsa.commons.version.operators;
 
+import com.igormaznitsa.commons.version.Version;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.igormaznitsa.commons.version.Version;
 
 /**
  * Default expression parser for version validator.
@@ -29,8 +30,8 @@ public final class DefaultExpressionParser implements ExpressionParser {
   private static final long serialVersionUID = 2676755912472640998L;
 
   private static final Pattern PATTERN_LEAF = Pattern.compile("(!=|>=|<=|>|<|=)\\s*(.*)");
-  private static final Pattern PATTERN_OR = Pattern.compile("(.+)\\;(.+)");
-  private static final Pattern PATTERN_AND = Pattern.compile("(.+)\\,(.+)");
+  private static final Pattern PATTERN_OR = Pattern.compile("(.+);(.+)");
+  private static final Pattern PATTERN_AND = Pattern.compile("(.+),(.+)");
 
   @Override
   public Operator parse(final String text) {

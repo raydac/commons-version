@@ -16,15 +16,18 @@
 package com.igormaznitsa.commons.version.operators;
 
 import com.igormaznitsa.commons.version.Version;
+
 import java.io.Serializable;
 
 /**
  * Common internal interface for operators.
+ *
  * @since 1.0.0
  */
 public interface Operator extends Serializable {
   /**
    * Check version by the operator.
+   *
    * @param version version to be checked, it can be null.
    * @return true if the version is valid, false otherwise (or if the version is null)
    * @since 1.0.0

@@ -1,11 +1,13 @@
 package com.igormaznitsa.commons.version;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import java.util.Arrays;
 
+import static org.junit.Assert.*;
+
 public class VersionTest {
-  
+
   private static String[] toStrArray(final Version[] versions) {
     final String[] result = new String[versions.length];
     for (int i = 0; i < versions.length; i++) {
@@ -25,21 +27,21 @@ public class VersionTest {
   }
 
   @Test
-  public void testEqualsAndHash(){
+  public void testEqualsAndHash() {
     final Version a = new Version("idea-1.2.3-dev");
     final Version b = new Version("idea-1.2.3-dev");
-    assertEquals(a.hashCode(),b.hashCode());
-    assertTrue(a.equals(b));
-    assertTrue(a.equals(a));
-    assertFalse(a.equals(b.changePrefix("idal")));
-    assertFalse(a.equals(new Version((String)null)));
+    assertEquals(a.hashCode(), b.hashCode());
+    assertEquals(a, b);
+    assertEquals(a, a);
+    assertNotEquals(a, b.changePrefix("idal"));
+    assertNotEquals(a, new Version((String) null));
   }
-  
+
   @Test
   public void testChange() {
-    assertEquals("netbeans-6.2.1-dev",new Version("idea-1.2.3-prod").changeNumeric(6,2,1).changePrefix("netbeans").changePostfix("dev").toString());
+    assertEquals("netbeans-6.2.1-dev", new Version("idea-1.2.3-prod").changeNumeric(6, 2, 1).changePrefix("netbeans").changePostfix("dev").toString());
   }
-  
+
   @Test
   public void testCompare_Nums() {
     final Version[] versions = {new Version(1, 2, 3), new Version(2), new Version(8), new Version(1, 1, 1), new Version(1, 2)};
@@ -55,31 +57,31 @@ public class VersionTest {
   }
 
   @Test
-  public void testParts_forNull(){
-    final Version version = new Version((String)null);
+  public void testParts_forNull() {
+    final Version version = new Version((String) null);
     assertEquals("", version.getPrefix());
     assertEquals("", version.getPostfix());
     assertEquals(0L, version.getMajor());
-    assertEquals("",version.toString());
+    assertEquals("", version.toString());
     assertFalse(version.isNumericPartPresented());
   }
-  
+
   @Test
-  public void testNumericParts(){
+  public void testNumericParts() {
     final Version version = new Version("hell-1234.5678.9101112-end");
-    assertEquals(1234L,version.getMajor());
-    assertEquals(5678L,version.getMinor());
-    assertEquals(9101112L,version.getMicro());
+    assertEquals(1234L, version.getMajor());
+    assertEquals(5678L, version.getMinor());
+    assertEquals(9101112L, version.getMicro());
     assertTrue(version.isNumericPartPresented());
   }
 
   @Test
-  public void testNetbeansversionParsing(){
+  public void testNetbeansversionParsing() {
     final Version version = new Version("NetBeans IDE 7.4 (Build 201310111528) (#623423d2342)".replace(' ', '-'));
     assertEquals("NetBeans IDE", version.getPrefix().replace('-', ' '));
-    assertEquals(7L,version.getMajor());
-    assertEquals(4L,version.getMinor());
-    assertEquals(0L,version.getMicro());
+    assertEquals(7L, version.getMajor());
+    assertEquals(4L, version.getMinor());
+    assertEquals(0L, version.getMicro());
     assertEquals("(Build 201310111528) (#623423d2342)", version.getPostfix().replace('-', ' '));
   }
 }

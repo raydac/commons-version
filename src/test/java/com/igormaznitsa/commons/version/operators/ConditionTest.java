@@ -16,10 +16,11 @@
 package com.igormaznitsa.commons.version.operators;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class ConditionTest {
-  
+
   @Test
   public void testSomeMethod() {
     assertEquals(Condition.EQU, Condition.decode("="));
@@ -32,5 +33,5 @@ public class ConditionTest {
     assertEquals(Condition.UNKNOWN, Condition.decode(null));
     assertEquals(Condition.UNKNOWN, Condition.decode(">>>>"));
   }
-  
+
 }

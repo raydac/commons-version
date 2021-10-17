@@ -19,6 +19,7 @@ import com.igormaznitsa.commons.version.Version;
 
 /**
  * Implementation of AND operator.
+ *
  * @since 1.0.0
  */
 public final class OperatorAnd implements Operator {
@@ -27,26 +28,26 @@ public final class OperatorAnd implements Operator {
 
   private final Operator a;
   private final Operator b;
-  
+
   /**
    * Constructor.
+   *
    * @param a the left part, must not be null
    * @param b the right part, must not be null
-   * 
    * @since 1.0.0
    */
   public OperatorAnd(final Operator a, final Operator b) {
     this.a = a;
     this.b = b;
   }
-  
+
   @Override
   public boolean isValid(final Version version) {
     return version != null && this.a.isValid(version) && this.b.isValid(version);
   }
-  
+
   @Override
-  public String toString(){
-    return a.toString()+','+b.toString();
+  public String toString() {
+    return a.toString() + ',' + b.toString();
   }
 }

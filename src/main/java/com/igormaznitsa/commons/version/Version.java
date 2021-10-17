@@ -23,14 +23,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * It represents a version and allows to get access to its information parts. The Representer can be created from text representation of a version or through providing version fields directly.
+ * It represents a version and allows getting access to its information parts. The Representer can be created from text representation of a version or through providing version fields directly.
  * Format of version is : {prefix-}?{ddd.ddd.ddd...ddd}?{-postfix}?
- * 
+ *
  * @since 1.0.0
  */
 public final class Version implements Comparable<Version>, Serializable {
 
-  private static final Pattern EXTRACTOR = Pattern.compile("^([^\\d\\.]+)-|\\.?([\\d]+)|-?(.*)$");
+  private static final Pattern EXTRACTOR = Pattern.compile("^([^\\d.]+)-|\\.?([\\d]+)|-?(.*)$");
   private static final long serialVersionUID = -4409642391893263592L;
 
   private final long[] numericParts;
@@ -40,16 +40,17 @@ public final class Version implements Comparable<Version>, Serializable {
 
   /**
    * Create instance from a string.
+   *
    * @param string text representation of version
    * @since 1.0.0
    */
-  public Version( final String string) {
+  public Version(final String string) {
     if (string == null) {
       this.prefix = "";
       this.postfix = "";
       this.numericParts = new long[0];
     } else {
-      final List<Long> detectedDigits = new ArrayList<Long>();
+      final List<Long> detectedDigits = new ArrayList<>();
       final Matcher matcher = EXTRACTOR.matcher(string.trim());
       String tail = "";
       String start = "";
@@ -79,8 +80,8 @@ public final class Version implements Comparable<Version>, Serializable {
 
   /**
    * Create version based only on numeric parts. Both Prefix and postfix are empty.
+   *
    * @param parts numeric parts of the version, it can be null
-   * 
    * @since 1.0.0
    */
   public Version(final long... parts) {
@@ -89,19 +90,19 @@ public final class Version implements Comparable<Version>, Serializable {
 
   /**
    * Create version from provided components.
-   * @param prefix the prefix, it can be null
+   *
+   * @param prefix       the prefix, it can be null
    * @param numericParts the numeric parts, it can be null
-   * @param postfix  the postfix, it can be null
-   * 
+   * @param postfix      the postfix, it can be null
    * @since 1.0.0
    */
   public Version(final String prefix, final long[] numericParts, final String postfix) {
     this.prefix = prefix == null ? "" : prefix.trim();
     this.postfix = postfix == null ? "" : postfix.trim();
-    
+
     this.numericParts = new long[numericParts == null ? 0 : numericParts.length];
-    if (numericParts!=null){
-      for(int i=0;i<numericParts.length;i++){
+    if (numericParts != null) {
+      for (int i = 0; i < numericParts.length; i++) {
         this.numericParts[i] = Math.abs(numericParts[i]);
       }
     }
@@ -111,97 +112,95 @@ public final class Version implements Comparable<Version>, Serializable {
 
   /**
    * Create copy of version with changed prefix.
+   *
    * @param prefix the new prefix, it can be null
    * @return copy of the version with replaced prefix
-   * 
    * @since 1.0.0
    */
-  public Version changePrefix(final String prefix){
-    return new Version(prefix,this.numericParts,this.postfix);
+  public Version changePrefix(final String prefix) {
+    return new Version(prefix, this.numericParts, this.postfix);
   }
 
   /**
    * Create copy of version with changed postfix.
    *
-   * @param postfix  the new postfix, it can be null
+   * @param postfix the new postfix, it can be null
    * @return copy of the version with replaced postfix
-   *
    * @since 1.0.0
    */
-  public Version changePostfix(final String postfix){
-    return new Version(this.prefix,this.numericParts,postfix);
+  public Version changePostfix(final String postfix) {
+    return new Version(this.prefix, this.numericParts, postfix);
   }
-  
+
   /**
    * Create copy of version with changed numeric parts.
    *
-   * @param numericParts  the new numeric parts, it can be null
+   * @param numericParts the new numeric parts, it can be null
    * @return copy of the version with replaced numeric parts
-   *
    * @since 1.0.0
    */
-  public Version changeNumeric(final long ... numericParts){
-    return new Version(this.prefix,numericParts,this.postfix);
+  public Version changeNumeric(final long... numericParts) {
+    return new Version(this.prefix, numericParts, this.postfix);
   }
-  
+
   /**
    * Get numeric part of version at position.
+   *
    * @param position the position of needed numeric part.
    * @return the numeric part, if it is not presented then 0 will be returned
-   * 
    * @since 1.0.0
    */
   public long getNumericPartAtPosition(final int position) {
-    return position<0 || position>=this.numericParts.length ? 0L : this.numericParts[position];
+    return position < 0 || position >= this.numericParts.length ? 0L : this.numericParts[position];
   }
-  
+
   /**
    * Get the prefix part.
+   *
    * @return the prefix, it is not null
-   * 
    * @since 1.0.0
    */
-  public String getPrefix(){
+  public String getPrefix() {
     return this.prefix;
   }
-  
+
   /**
    * Get the postfix part.
+   *
    * @return the postfix part, it is not null
-   * 
    * @since 1.0.0
    */
-  public String getPostfix(){
+  public String getPostfix() {
     return this.postfix;
   }
 
   /**
    * Get the major (first) numeric element of version.
+   *
    * @return the first element of version
-   * 
    * @since 1.0.0
    */
-  public long getMajor(){
+  public long getMajor() {
     return this.getNumericPartAtPosition(0);
   }
-  
+
   /**
    * Get the minor (second) numeric element of version.
+   *
    * @return the second element of version.
-   * 
    * @since 1.0.0
    */
-  public long getMinor(){
+  public long getMinor() {
     return this.getNumericPartAtPosition(1);
   }
-  
+
   /**
    * Get the micro (third) numeric element of version.
+   *
    * @return the third element of version.
-   * 
    * @since 1.0.0
    */
-  public long getMicro(){
+  public long getMicro() {
     return this.getNumericPartAtPosition(2);
   }
 
@@ -239,7 +238,7 @@ public final class Version implements Comparable<Version>, Serializable {
         if (nofirst) {
           result.append('.');
         }
-        result.append(Long.toString(i));
+        result.append(i);
         nofirst = true;
       }
     }
@@ -254,11 +253,9 @@ public final class Version implements Comparable<Version>, Serializable {
 
   @Override
   public int compareTo(final Version version) {
-    final String thatPrefix = version.prefix;
-    final String thatPostfix = version.postfix;
     final long[] thatNumbers = version.numericParts;
 
-    final int comparePrefix = this.prefix.compareTo(thatPrefix);
+    final int comparePrefix = this.prefix.compareTo(version.prefix);
     if (comparePrefix != 0) {
       return comparePrefix;
     }
@@ -268,22 +265,22 @@ public final class Version implements Comparable<Version>, Serializable {
     for (int i = 0; i < maxnum; i++) {
       final long x = i < this.numericParts.length ? this.numericParts[i] : 0L;
       final long y = i < thatNumbers.length ? thatNumbers[i] : 0L;
-      final int result = (x < y) ? -1 : ((x == y) ? 0 : 1);
+      final int result = Long.compare(x, y);
       if (result != 0) {
         return result;
       }
     }
 
-    return this.postfix.compareTo(thatPostfix);
+    return this.postfix.compareTo(version.postfix);
   }
 
   /**
    * Check is there any numeric part in the version.
+   *
    * @return true if there is numeric part, false otherwise.
-   * 
    * @since 1.0.0
    */
-  public boolean isNumericPartPresented(){
+  public boolean isNumericPartPresented() {
     return this.numericParts.length > 0;
   }
 }
